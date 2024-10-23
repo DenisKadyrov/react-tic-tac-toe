@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Board } from "./components/Board";
 import { ResetButton } from "./components/ResetButton";
@@ -35,22 +35,6 @@ const App = () => {
 
     setBoard(updatedBoard);
 
-    // Восстановление состояния игры при первом рендере компонента
-    useEffect(() => {
-        const savedGame = localStorage.getItem('gameState'); // Пытаемся получить сохраненное состояние из localStorage
-        if (savedGame) {
-          const { xPlaying, board, scores, gameOver } = JSON.parse(savedGame); // Если состояние найдено, восстанавливаем его
-          setXPlaying(xPlaying);
-          setBoard(board);
-          setScores(scores);
-          setGameOver(gameOver)
-        }
-    }, []); // Этот эффект выполнится только один раз при монтировании компонента
-
-    // Сохранение состояния игры при каждом изменении поля или очередности хода
-    useEffect(() => {
-        localStorage.setItem('gameState', JSON.stringify({ xPlaying, board, scores, gameOver })); // Сохраняем текущее состояние в localStorage
-    }, [xPlaying, board, scores, gameOver]); // Этот эффект выполняется при изменении board или isXNext
 
 
     // Step 2: Check if either player has won the game
@@ -71,7 +55,22 @@ const App = () => {
     // Step 3: Change active player
     setXPlaying(!xPlaying);
   }
+    // Восстановление состояния игры при первом рендере компонента
+    useEffect(() => {
+        const savedGame = localStorage.getItem('gameState'); // Пытаемся получить сохраненное состояние из localStorage
+        if (savedGame) {
+          const { xPlaying, board, scores, gameOver } = JSON.parse(savedGame); // Если состояние найдено, восстанавливаем его
+          setXPlaying(xPlaying);
+          setBoard(board);
+          setScores(scores);
+          setGameOver(gameOver)
+        }
+    }, []); // Этот эффект выполнится только один раз при монтировании компонента
 
+    // Сохранение состояния игры при каждом изменении поля или очередности хода
+    useEffect(() => {
+        localStorage.setItem('gameState', JSON.stringify({ xPlaying, board, scores, gameOver })); // Сохраняем текущее состояние в localStorage
+    }, [xPlaying, board, scores, gameOver]); // Этот эффект выполняется при изменении board или isXNext
   const checkWinner = (board) => {
     for (let i = 0; i < WIN_CONDITIONS.length; i++) {
       const [x, y, z] = WIN_CONDITIONS[i];
