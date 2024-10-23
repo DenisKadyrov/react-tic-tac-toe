@@ -35,6 +35,24 @@ const App = () => {
 
     setBoard(updatedBoard);
 
+    // Восстановление состояния игры при первом рендере компонента
+    useEffect(() => {
+        const savedGame = localStorage.getItem('gameState'); // Пытаемся получить сохраненное состояние из localStorage
+        if (savedGame) {
+          const { xPlaying, board, scores, gameOver } = JSON.parse(savedGame); // Если состояние найдено, восстанавливаем его
+          setXPlaying(xPlaying);
+          setBoard(board);
+          setScores(scores);
+          setGameOver(gameOver)
+        }
+    }, []); // Этот эффект выполнится только один раз при монтировании компонента
+
+    // Сохранение состояния игры при каждом изменении поля или очередности хода
+    useEffect(() => {
+        localStorage.setItem('gameState', JSON.stringify({ xPlaying, board, scores, gameOver })); // Сохраняем текущее состояние в localStorage
+    }, [xPlaying, board, scores, gameOver]); // Этот эффект выполняется при изменении board или isXNext
+
+
     // Step 2: Check if either player has won the game
     const winner = checkWinner(updatedBoard);
 
