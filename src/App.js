@@ -24,10 +24,27 @@ const App = () => {
   const [board, setBoard] = useState(Array(9).fill(null))
   const [scores, setScores] = useState({ xScore: 0, oScore: 0 })
   const [gameOver, setGameOver] = useState(false);
+  
 
+  useEffect(() => {
+      // Пытаемся получить сохранённое состояние игры из Telegram Web App storage
+      const savedGame = CloudStorage.getItem("savedGame");
+
+      if (savedGame) {
+        const { xPlaying, board, scores, gameOver } = JSON.parse(savedGame); // Восстанавливаем состояние
+        setXPlaying(xPlaying);
+        setBoard(board);
+        setScores(scores);
+        setGameOver(gameOver);
+      }
+}, []); // Выполнится один раз при монтировании компонента
   
-  
-  
+  useEffect(() => {
+    // Если это Telegram Web App, сохраняем состояние игры в Telegram Web App storage
+    CloudStorage.setItem("savedGame", JSON.stringify({ xPlaying, board, scores, gameOver }))
+  }, [xPlaying, board, scores, gameOver]); // Срабатывает при изменении переменных
+
+
   const handleBoxClick = (boxIdx) => {
     // Step 1: Update the board
     const updatedBoard = board.map((value, idx) => {
@@ -61,23 +78,6 @@ const App = () => {
 
     setXPlaying(!xPlaying);
   }
-  useEffect(() => {
-      // Пытаемся получить сохранённое состояние игры из Telegram Web App storage
-      const savedGame = CloudStorage.getItem("savedGame");
-
-      if (savedGame) {
-        const { xPlaying, board, scores, gameOver } = JSON.parse(savedGame); // Восстанавливаем состояние
-        setXPlaying(xPlaying);
-        setBoard(board);
-        setScores(scores);
-        setGameOver(gameOver);
-      }
-}, []); // Выполнится один раз при монтировании компонента
-  
-  useEffect(() => {
-    // Если это Telegram Web App, сохраняем состояние игры в Telegram Web App storage
-    CloudStorage.setItem("savedGame", JSON.stringify({ xPlaying, board, scores, gameOver }))
-  }, [xPlaying, board, scores, gameOver]); // Срабатывает при изменении переменных
 
 
   const checkWinner = (board) => {
