@@ -29,12 +29,12 @@ const App = () => {
   
   useEffect(() => {
     // Если это Telegram Web App, сохраняем состояние игры в Telegram Web App storage
-    CloudStorage.setItem("savedGame", JSON.stringify({ xPlaying, board, scores, gameOver }))
+    sessionStorage.setItem("savedGame", JSON.stringify({ xPlaying, board, scores, gameOver }))
   }, [xPlaying, board, scores, gameOver]); // Срабатывает при изменении переменных
 
   useEffect(() => {
       // Пытаемся получить сохранённое состояние игры из Telegram Web App storage
-      const savedGame = CloudStorage.getItem("savedGame")
+      const savedGame = sessionStorage.getItem("savedGame")
 
       if (savedGame) {
         const { xPlaying, board, scores, gameOver } = JSON.parse(savedGame); // Восстанавливаем состояние
