@@ -58,18 +58,18 @@ const App = () => {
     // Step 3: Change active player
     setXPlaying(!xPlaying);
   }
-  useEffect(() => {
-      // Пытаемся получить сохранённое состояние игры из Telegram Web App storage
-      const savedGame = CloudStorage.getItem("savedGame")
-      alert(savedGame);
-      if (savedGame) {
-        const { xPlaying, board, scores, gameOver } = JSON.parse(savedGame); // Восстанавливаем состояние
-        setXPlaying(xPlaying);
-        setBoard(board);
-        setScores(scores);
-        setGameOver(gameOver);
-      }
-}, []); // Выполнится один раз при монтировании компонента
+  // useEffect(() => {
+  //     // Пытаемся получить сохранённое состояние игры из Telegram Web App storage
+  //     const savedGame = CloudStorage.getItem("savedGame")
+  //     alert(savedGame);
+  //     if (savedGame) {
+  //       const { xPlaying, board, scores, gameOver } = JSON.parse(savedGame); // Восстанавливаем состояние
+  //       setXPlaying(xPlaying);
+  //       setBoard(board);
+  //       setScores(scores);
+  //       setGameOver(gameOver);
+  //     }
+// }, []); // Выполнится один раз при монтировании компонента
 
 useEffect(() => {
     // Если это Telegram Web App, сохраняем состояние игры в Telegram Web App storage
