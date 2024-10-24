@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Cookies from "js-cookie";
 
 import { Board } from "./components/Board";
 import { ResetButton } from "./components/ResetButton";
@@ -7,8 +6,8 @@ import { ScoreBoard } from "./components/ScoreBoard";
 import './App.css';
 
 
+const CloudStorage = window.Telegram.WebApp.CloudStorage
 const App = () => {
-  const CloudStorage = window.Telegram.WebApp.CloudStorage
 
   const WIN_CONDITIONS = [
     [0, 1, 2],
