@@ -58,6 +58,7 @@ const App = () => {
     }
     
     // Step 3: Change active player
+
     setXPlaying(!xPlaying);
   }
 //   useEffect(() => {
