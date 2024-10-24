@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Cookies from "js-cookie";
 
 import { Board } from "./components/Board";
 import { ResetButton } from "./components/ResetButton";
@@ -27,24 +28,7 @@ const App = () => {
 
   
   
-  useEffect(() => {
-    // Если это Telegram Web App, сохраняем состояние игры в Telegram Web App storage
-    sessionStorage.setItem("savedGame", JSON.stringify({ xPlaying, board, scores, gameOver }))
-  }, [xPlaying, board, scores, gameOver]); // Срабатывает при изменении переменных
-
-  useEffect(() => {
-      // Пытаемся получить сохранённое состояние игры из Telegram Web App storage
-      const savedGame = sessionStorage.getItem("savedGame")
-
-      if (savedGame) {
-        const { xPlaying, board, scores, gameOver } = JSON.parse(savedGame); // Восстанавливаем состояние
-        setXPlaying(xPlaying);
-        setBoard(board);
-        setScores(scores);
-        setGameOver(gameOver);
-      }
-}); // Выполнится один раз при монтировании компонента
-
+  
   const handleBoxClick = (boxIdx) => {
     // Step 1: Update the board
     const updatedBoard = board.map((value, idx) => {
@@ -54,14 +38,14 @@ const App = () => {
         return value;
       }
     })
-
+    
     setBoard(updatedBoard);
-
-
-
+    
+    
+    
     // Step 2: Check if either player has won the game
     const winner = checkWinner(updatedBoard);
-
+    
     if (winner) {
       if (winner === "O") {
         let { oScore } = scores;
@@ -73,11 +57,28 @@ const App = () => {
         setScores({ ...scores, xScore })
       }
     }
-
+    
     // Step 3: Change active player
     setXPlaying(!xPlaying);
   }
+  
+  useEffect(() => {
+    // Если это Telegram Web App, сохраняем состояние игры в Telegram Web App storage
+    CloudStorage.setItem("savedGame", JSON.stringify({ xPlaying, board, scores, gameOver }))
+  }, [xPlaying, board, scores, gameOver]); // Срабатывает при изменении переменных
 
+  useEffect(() => {
+      // Пытаемся получить сохранённое состояние игры из Telegram Web App storage
+      const savedGame = CloudStorage.getItem("savedGame");
+
+      if (savedGame) {
+        const { xPlaying, board, scores, gameOver } = JSON.parse(savedGame); // Восстанавливаем состояние
+        setXPlaying(xPlaying);
+        setBoard(board);
+        setScores(scores);
+        setGameOver(gameOver);
+      }
+}, []); // Выполнится один раз при монтировании компонента
 
   const checkWinner = (board) => {
     for (let i = 0; i < WIN_CONDITIONS.length; i++) {
