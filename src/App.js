@@ -9,7 +9,6 @@ const CloudStorage = window.Telegram.WebApp.CloudStorage
 
 const App = () => {
 
-  alert("hi");
   const WIN_CONDITIONS = [
     [0, 1, 2],
     [3, 4, 5],
@@ -22,9 +21,9 @@ const App = () => {
   ]
 
   const [xPlaying, setXPlaying] = useState(true);
-  const [board, setBoard] = useState(Array(15).fill(null))
+  const [board, setBoard] = useState(Array(9).fill(null))
   const [scores, setScores] = useState({ xScore: 0, oScore: 0 })
-  const [gameOver, setGameOver] = useState(true);
+  const [gameOver, setGameOver] = useState(false);
 
 
   const handleBoxClick = (boxIdx) => {
