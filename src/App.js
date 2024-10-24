@@ -61,6 +61,7 @@ const App = () => {
   useEffect(() => {
       // Пытаемся получить сохранённое состояние игры из Telegram Web App storage
       const savedGame = CloudStorage.getItem("savedGame")
+      alert(savedGame);
       if (savedGame) {
         const { xPlaying, board, scores, gameOver } = JSON.parse(savedGame); // Восстанавливаем состояние
         setXPlaying(xPlaying);
