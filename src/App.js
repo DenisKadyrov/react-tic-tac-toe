@@ -6,9 +6,10 @@ import { ScoreBoard } from "./components/ScoreBoard";
 import './App.css';
 
 const CloudStorage = window.Telegram.WebApp.CloudStorage
+
 const App = () => {
 
-
+  alert("hi");
   const WIN_CONDITIONS = [
     [0, 1, 2],
     [3, 4, 5],
