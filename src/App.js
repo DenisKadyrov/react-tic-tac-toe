@@ -26,19 +26,19 @@ const App = () => {
   const [gameOver, setGameOver] = useState(false);
   
 
-  useEffect(() => {
-      // Пытаемся получить сохранённое состояние игры из Telegram Web App storage
-      const savedGame = CloudStorage.getItem("savedGame");
+//   useEffect(() => {
+//       // Пытаемся получить сохранённое состояние игры из Telegram Web App storage
+//       const savedGame = CloudStorage.getItem("savedGame");
 
-      if (savedGame) {
-        const { xPlaying, board, scores, gameOver } = JSON.parse(savedGame); // Восстанавливаем состояние
-        setXPlaying(xPlaying);
-        setBoard(board);
-        setScores(scores);
-        setGameOver(gameOver);
-      }
-      CloudStorage.removeItem("savedGame");
-}, []); // Выполнится один раз при монтировании компонента
+//       if (savedGame) {
+//         const { xPlaying, board, scores, gameOver } = JSON.parse(savedGame); // Восстанавливаем состояние
+//         setXPlaying(xPlaying);
+//         setBoard(board);
+//         setScores(scores);
+//         setGameOver(gameOver);
+//       }
+//       CloudStorage.removeItem("savedGame");
+// }, []); // Выполнится один раз при монтировании компонента
   
   useEffect(() => {
     // Если это Telegram Web App, сохраняем состояние игры в Telegram Web App storage
