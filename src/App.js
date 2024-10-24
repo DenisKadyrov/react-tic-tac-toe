@@ -37,6 +37,7 @@ const App = () => {
         setScores(scores);
         setGameOver(gameOver);
       }
+      CloudStorage.removeItem("savedGame");
 }, []); // Выполнится один раз при монтировании компонента
   
   useEffect(() => {
